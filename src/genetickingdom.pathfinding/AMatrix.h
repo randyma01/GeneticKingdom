@@ -5,41 +5,40 @@
  *      Author: ricardo
  */
 
-#ifndef SRC_GENETICKINGDOM_PATHFINDING_AMATRIX_H_
-#define SRC_GENETICKINGDOM_PATHFINDING_AMATRIX_H_
+#ifndef AMATRIX_H_
+#define AMATRIX_H_
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
+#include <vector>
+#include "ANode.h"
+#include "AList.h"
 using namespace std;
 
 class AMatrix {
 
-	struct ANode{
-		int id;
-		int posX;
-		int posY;
-		//-----------
-		bool free;
-		ANode* parent;
-		int G;//distance from start node
-		int H;//distance from end node
-		int F;// H+Gs
-		ANode* up=NULL;
-		ANode* down=NULL;
-		ANode* left=NULL;
-		ANode* right=NULL;
-	};
 public:
 	AMatrix();
 	AMatrix(int i, int j);
 	void printMat();
 	void setHeuristic(int iEnd, int jEnd);
 	void setNeighbors();
+
+	void addObstacle(int i, int j);
+
+	void getNeighborList(vector<ANode*> *lista, ANode* nodo);
+
+	int** reconstructPath(ANode* end);
+	int** AStar(int iStart,int jStart,int iEnd,int jEnd);
 	int filas;
 	int columnas;
 	ANode** matrix;
+
+	ANode* getSmallerFnode(vector<ANode*> *lista);
+	void deleteNodeinList(vector<ANode*> *lista, ANode* nodo);
+	bool isInList(vector<ANode*> *lista, ANode* nodo);
 	virtual ~AMatrix();
 };
 
-#endif /* SRC_GENETICKINGDOM_PATHFINDING_AMATRIX_H_ */
+#endif /* AMATRIX_H_ */
